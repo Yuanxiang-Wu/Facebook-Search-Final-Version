@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html ng-app = "myApp">
+<head>
+    <meta charset = "utf-8">
+    <title>Facebook Search</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="dirPagination.js"></script>
+    <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+    <script src="https://github.com/angular-ui/bootstrap/blob/master/src/progressbar/progressbar.js"></script>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('siteCtrl', function($scope, $http) {
+            $scope.index = 1;
+            $scope.pid = 'a';
+            $scope.type = '';
+            $scope.counter = 0;
+            $scope.showPrev = false;
+            $scope.showTable = false;
+            $scope.showFav = false;
+            
+            $scope.search = function () {
+                if ($scope.keyWord!="") {
+                    $scope.showTable = true;
+                }
+                
+                $scope.type = 'user';
+                var req = {
+                    method: 'GET',
+                    url: 'http://cs-server.usc.edu:22479/facebook.php',
+                    params: {
+                        type: 'user',
+                        key: $scope.keyWord
+                    }
+                }
+                $http(req).then(function(response) {      
+                    $scope.users = response.data;
+                });
+            }
+            $scope.reset = function () {
+                $scope.index = 1;
+                $scope.type = '';
+                $scope.counter = 0;
+                $scope.showPrev = false;
+                $scope.showTable = false;
+                $scope.keyWord = angular.copy('');
+            }
+            $scope.showUser = function() {
+                $scope.showTable = true;
+                $scope.showFav = false;
+                $scope.showPrev = false;
+                $scope.counter = 0;
+                $scope.type = 'user';
+                var req = {
+                    method: 'GET',
+                    url: 'http://cs-server.usc.edu:22479/facebook.php',
+                    params: {
+                        type: 'user',
+                        key: $scope.keyWord
+                    }
+                }
+                $http(req).then(function(response) {      
+                    $scope.users = response.data;
+                });
+            }
+            $scope.showPage = function() {
+                $scope.showTable = true;
+                $scope.showFav = false;
+                $scope.showPrev = false;
+                $scope.counter = 0;
+                $scope.type = 'page';
+                var req = {
+                    method: 'GET',
+                    url: 'http://cs-server.usc.edu:22479/facebook.php',
+                    params: {
+                        type: 'page',
+                        key: $scope.keyWord
+                    }
+                }
+                $http(req).then(function(response) {      
+                    $scope.users = response.data;
+                });
+            }
+            $scope.showEvent = function() {
+                $scope.showTable = true;
+                $scope.showFav = false;
+                $scope.showPrev = false;
+                $scope.counter = 0;
+                $scope.type = 'event';
+                var req = {
+                    method: 'GET',
+                    url: 'http://cs-server.usc.edu:22479/facebook.php',
+                    params: {
+                        type: 'event',
+                        key: $scope.keyWord
+                    }
+                }
+                $http(req).then(function(response) {      
+                    $scope.users = response.data;
+                });
+            }
+            $scope.showPlace = function() {
+                $scope.showTable = true;
+                $scope.showFav = false;
+                $scope.showPrev = false;
+                $scope.counter = 0;
+                $scope.type = 'place';
+                var req = {
+                    method: 'GET',
+                    url: 'http://cs-server.usc.edu:22479/facebook.php',
+                    params: {
+                        type: 'place',
+                        key: $scope.keyWord
+                    }
+                }
+                $http(req).then(function(response) {      
+                    $scope.users = response.data;
+                });
+            }
+            $scope.showGroup = function() {
+                $scope.showTable = true;
+                $scope.showFav = false;
+                $scope.showPrev = false;
+                $scope.counter = 0;
+                $scope.type = 'group';
+                var req = {
+                    method: 'GET',
+                    url: 'http://cs-server.usc.edu:22479/facebook.php',
+                    params: {
+                        type: 'group',
+                        key: $scope.keyWord
+                    }
+                }
+                $http(req).then(function(response) {      
+                    $scope.users = response.data;
+                });
+            }
+            $scope.showFavorite = function() {
+                $scope.showTable = false;
+                $scope.showPrev = false;
+                $scope.counter = 0;
+                $scope.showFav = true;
+            }
+            $scope.next = function() {
+                $scope.counter++;
+                if($scope.counter > 0) {
+                    $scope.showPrev = true;
+                } else {
+                    $scope.showPrev = false;
+                }
+                var req = {
+                    method: 'GET',
+                    url: 'http://sample-env-2.rjmss7zh5q.us-west-2.elasticbeanstalk.com/',
+                    params: {
+                        type: $scope.type,
+                        key: $scope.keyWord,
+                        pageNum: $scope.counter,
+                    }
+                }
+                $http(req).then(function(response) {      
+                    $scope.users = response.data;
+                    console.log(response);
+                });
+            }
+            $scope.previous = function() {
+                $scope.counter--;
+                if($scope.counter > 0) {
+                    $scope.showPrev = true;
+                } else {
+                    $scope.showPrev = false;
+                }
+                var req = {
+                    method: 'GET',
+                    url: 'http://cs-server.usc.edu:22479/facebook.php',
+                    params: {
+                        type: $scope.type,
+                        key: $scope.keyWord,
+                        pageNum: $scope.counter,
+                    }
+                }
+                $http(req).then(function(response) {      
+                    $scope.users = response.data;
+                    console.log(response);
+                });
+            }
+            
+            $scope.showDetail= function(a) {
+                $scope.temp = a;
+                var req = {
+                    method: 'GET',
+                    url: 'http://cs-server.usc.edu:22479/facebook.php',
+                    params: {
+                        id: a.id
+                    }
+                }
+                $http(req).then(function(response) {      
+                    $scope.albums = response.data.albums;
+                    $scope.posts = response.data.posts;
+                    console.log($scope.posts[1].created_time.date);
+                });
+            }
+            
+            if (window.localStorage.getItem("A") == null) {
+                var storeA = [];
+                window.localStorage.setItem("A", JSON.stringify(storeA));
+            }
+            $scope.showA = function () {
+                $scope.oA = JSON.parse(window.localStorage.getItem("A"));
+            }
+            $scope.showA();
+            $scope.add = function(x) {
+                var flag = false;
+                var temp = JSON.parse(window.localStorage.getItem("A"));
+                for (i = 0; i < temp.length; i++) {
+                    if (JSON.stringify(temp[i].id) == JSON.stringify(x.id)) {
+                        temp.splice(i, 1);
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag == false) {
+                    temp.push(x);
+                }
+                window.localStorage.setItem("A", JSON.stringify(temp));
+                $scope.showA();
+            }
+            $scope.remo = function (x) {
+                var tempa = JSON.parse(window.localStorage.getItem("A"));
+                for (i = 0; i < tempa.length; i++) {
+                    if (JSON.stringify(tempa[i].id) == JSON.stringify(x.id)) {
+                        tempa.splice(i, 1);
+                        break;
+                    }
+                }
+                window.localStorage.setItem("A", JSON.stringify(tempa));
+                $scope.showA();
+            }
+            $scope.isExistL = function (x) {
+                var flag = false;
+
+                var tempa = JSON.parse(window.localStorage.getItem("A"));
+                for (i = 0; i < tempa.length; i++) {
+                    if (JSON.stringify(tempa[i].id) == JSON.stringify(x.id)) {
+                        flag = true;
+                        return "glyphicon glyphicon-star bis";
+                    }
+                }
+                return "glyphicon glyphicon-star-empty";
+            }
+            
+        });
+        function feedDialog(a) {
+            FB.ui({
+                app_id: '248335022303052',
+                method: 'feed',
+                link: window.location.href, picture: a.picture,url, name: x.name, caption: 'FB SEARCH FROM USC CSCI571',
+                }, function(response){
+                if (response && !response.error_message) {
+                    alert("Posted Successfully");
+                }
+                else {
+                    alert("Not Posted")
+                }
+                });
+        }
+    </script>
+    <script>
+     $('#carousel-main').carousel({
+      interval: false
+        });
+    </script>
+    <style>
+        .glyphicon-star {
+            color: yellow;
+            text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black;
+        }
+        .glyphicon-trash:hover {
+            color: red;
+        }
+        .img1{
+            border-radius: 50%;
+        }
+        
+        .searchbar {
+            background-color: lightgray;
+            margin-top: auto;
+            padding-top: auto;
+            height:40px;
+            vertical-align: middle;
+        }
+        .pad {
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+        .navi {
+            border-bottom: solid;
+            border-color: #337ab7;
+        }
+        
+        .nav-pills > li > a {
+            border-radius: 0px;
+            text-align: center;
+        }
+        nav > li {
+            position: absolute;
+            display: block;
+        }
+        .nav-pills > li + li {
+            margin-left: 0px;
+        }
+        .col-md-2 {
+            padding-left:0px;
+            padding-right:0px;
+        }
+        
+        h2 {
+            margin-top:auto;
+            text-align: center
+        }
+        
+        .btn-sh{
+            width: 80px;
+            margin-top: auto;
+        }
+        .btn-cl{
+            width:80px;
+            margin-top: auto;
+        }
+        .inputbar{
+            width:400px;
+        }
+    </style>
+</head>
+
+
+<body ng-app="myApp" ng-controller="siteCtrl">
+    <div class = "container-fluid">
+    <div class = "panel-heading">
+        <div class = "searchbar">
+        <form class = "form-inline" role = "form">
+            <p class = "panel-title col-md-4" style = "color: #265a88">FB Search</p>
+            <input align='center' ng-model = "keyWord" type = "text" class = "form-control ng-pristine ng-untouched ng valid ng-empty col-md-6 inputbar" placeholder = "type something..." required>
+            <button type="submit" ng-click = 'search()' class="btn btn-primary btn-sm btn-sh" id="searchButton" href="#users">
+				<span class="glyphicon glyphicon-search"></span>
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-cl" id="clearButton" ng-click = "reset()" href="#users" >
+				Clear
+			</button>
+        </form>
+        </div>
+        <div class = "navi">
+        <ul class = "nav nav-pills">
+            
+            <li class = "active col-md-2">
+                <a ng-click = showUser() data-toggle="tab">Users</a>
+            </li>
+            <li class = "col-md-2">
+                <a ng-click = showPage() data-toggle="tab">Pages</a>
+            </li>
+            <li class = "col-md-2">
+                <a ng-click = showEvent() data-toggle="tab">Events</a>
+            </li>
+            <li class = "col-md-2">
+                <a ng-click = showPlace() data-toggle="tab">Places</a>
+            </li>
+            <li class = "col-md-2">
+                <a ng-click = showGroup() data-toggle="tab">Groups</a>
+            </li>
+            <li class = "col-md-2">
+                <a ng-click = showFavorite() data-toggle="tab">Favorites</a>
+            </li>
+            
+        </ul>
+        </div>
+    </div>
+    <div id="carousel-main" class="carousel slide partial-width">
+        <div class="carousel-inner">
+            <div class="item active">
+    <div ng-show = 'showTable' class = "table-responsive" id = "users">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Profile photo</th>
+                  <th>Name</th>
+                  <th>Favorite</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr  ng-repeat="x in users">
+                    <td>
+                        {{$index + 1}}
+                    </td>
+                    <td>
+                        <img src={{x.picture.url}} width='40px' height='40px' class = "img1"/>
+                    </td>
+                    <td>
+                        {{x.name}}
+                    </td>
+                    <td><button type="button" class="btn btn-default gray-gradient" ng-click="add(x)"><i id="favorite-star-icon" ng-click="isInStore(x)" ng-class="isExistL(x)" ></i></button></td>
+                    <td><button type="button" class="btn btn-default gray-gradient" href="#carousel-main" data-slide="next" ng-click = showDetail(x)><span class="glyphicon glyphicon-chevron-right"></span></button></td>
+                </tr>
+              </tbody>
+            </table>
+        <div align = 'center'>
+        <button ng-show = 'showPrev' type="button" class="btn btn-default btn-sm" id="previousButton" ng-click = "previous()" style = "width : 80px">
+				Previous
+			</button>
+        <button type="button" class="btn btn-default btn-sm" id="nextButton" ng-click = 'next()' style = "width : 80px">
+				Next
+			</button>
+        </div>
+    </div>
+    
+    <div ng-show = 'showFav' class = "table-responsive" id = "users">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Profile photo</th>
+                  <th>Name</th>
+                  <th>Favorite</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr  ng-repeat="x in oA">
+                    <td>
+                        {{$index + 1}}
+                    </td>
+                    <td>
+                        <img src={{x.picture.url}} width='40px' height='40px' class = "img1"/>
+                    </td>
+                    <td>
+                        {{x.name}}
+                    </td>
+                    <td><button type="button" class="btn btn-default gray-gradient" ng-click="remo(x)"><i id="favorite-star-icon"  class="glyphicon glyphicon-trash"></i></button></td>
+                    <td><button type="button" class="btn btn-default gray-gradient" href="#carousel-main" data-slide="next" ng-click = showDetail(x)><span class="glyphicon glyphicon-chevron-right"></span></button></td>
+                </tr>
+              </tbody>
+            </table>
+    
+    </div>
+            </div>
+            
+            
+            <div class = 'item'>
+            <div>
+                <span class = "col-md-10"><button type="button" class="btn btn-default gray-gradient" href="#carousel-main" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span>Back</button></span>
+                <span class = "col-md-1"><button type="button" class="btn btn-default gray-gradient" ng-click="add(temp)"><i id="favorite-star-icon" ng-click="isInStore(temp)" ng-class="isExistL(temp)" ></i></button></span>
+                <span class = "col-md-1"><img src="fb_icon.png" width = "34px" height = "34px" OnClick="feedDialog(temp)"></img></span>
+            </div>
+            
+            <span class="col-md-6">
+                
+                
+  
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading gray-gradient no-bottom">Albums</div>
+                    <div class="panel-body">
+                
+                
+                
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">{{albums[0].name}}</a>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse">
+        <div class="panel-body">
+         <div ng-repeat = "y in albums[0].photos">
+            <img src = {{y.picture}} width = "100px" height = "100px">
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">{{albums[1].name}}</a>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body">
+         <div ng-repeat = "y in albums[1].photos">
+            <img src = {{y.picture}} width = "100px" height = "100px">
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">{{albums[2].name}}</a>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body">
+         <div ng-repeat = "y in albums[2].photos">
+            <img src = {{y.picture}} width = "100px" height = "100px">
+            </div>
+        </div>
+      </div>
+    </div>
+      <div class="panel panel-default">
+      <div class="panel-heading">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">{{albums[3].name}}</a>
+      </div>
+      <div id="collapse4" class="panel-collapse collapse">
+        <div class="panel-body">
+         <div ng-repeat = "y in albums[3].photos">
+            <img src = {{y.picture}} width = "100px" height = "100px">
+            </div>
+        </div>
+      </div>
+    </div>
+      <div class="panel panel-default">
+      <div class="panel-heading">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">{{albums[4].name}}</a>
+      </div>
+      <div id="collapse5" class="panel-collapse collapse">
+        <div class="panel-body">
+         <div ng-repeat = "y in albums[4].photos">
+            <img src = {{y.picture}} width = "100px" height = "100px">
+            </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+                    
+                </div>
+                </div>
+                
+                <!--
+                <div class="panel panel-default">
+                    <div class="panel-heading gray-gradient no-bottom">Albums</div>
+                    <div class="panel-body">
+                            <div ng-repeat = "x in albums" class="container_panel panel panel-default">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading gray-gradient no-bottom">{{x.name}}</div>
+                                    <div class="panel-body">
+                                        <div ng-repeat = "y in x.photos">
+                                            <img src = {{y.picture}} width = "100px" height = "100px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                       
+                    </div>
+                </div>
+                -->
+            </span>
+        
+            <span class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading gray-gradient no-bottom">Posts</div>
+                    <div class="panel-body">
+                        <div ng-repeat = "x in posts" class="container_panel panel panel-default">
+                                <div class="panel-body">
+                                    
+                                        <div class = "col-md-1">
+                                            <img src={{temp.picture.url}} width='40px' height='40px'/>
+                                        </div>
+                                        <div class = "col-md-11">
+                                            <p>{{temp.name}}</p>
+                                            <P>{{x.created_time.date}}</P>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </span>
+        </div><!--carousel item-->
+            </div> <!--carousel inner-->
+            </div> <!--carousel main-->
+    <script>
+     $('#carousel-main').carousel({
+      interval: false
+        });
+    </script>
+</body>
+
+
+
+
+
+</html>
